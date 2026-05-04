@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAtlas</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="header-logo">
+            <span class="logo-icono">&lt;/&gt;</span>
+            <h1>CodeAtlas</h1>
+        </div>
+
+        <!-- NAVEGACIÓN -->
+        <nav>
+            <ul>
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#contenidos">Contenidos</a></li>
+                <li><a href="#tutorial">Tutorial</a></li>
+                <li><a href="#reseñas">Reseñas</a></li>
+                <li><a href="#comunidad">Comunidad</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <!-- INICIO -->
+        <section id="inicio" class="inicio">
+
+            <div class="texto-inicio">
+
+                <p class="tag-intro"># bienvenido al atlas del código</p>
+
+                <h2>Aprendé a programar.<br>Sin tanto bardo.</h2>
+
+                <p>
+                    CodeAtlas es un espacio abierto donde cualquiera puede aprender
+                    o compartir lo que sabe sobre programación. Como una wikipedia,
+                    pero enfocada en código — desde lo más básico hasta cosas más
+                    complejas como robótica o inteligencia artificial.
+                </p>
+
+                <p>
+                    Lo armé porque cuando empecé a aprender no encontraba un lugar
+                    donde todo estuviera junto y explicado sin tanto tecnicismo.
+                    Este es ese lugar.
+                </p>
+
+                <a href="#contenidos" class="btn-principal">Explorar contenidos</a>
+
+            </div>
+
+            <div class="img-inicio">
+                <img src="img/banner.jpg" alt="Personas programando juntas">
+            </div>
+
+        </section>
+
+        <!-- CONTENIDOS -->
+        <!-- Organizado con Flexbox -->
+        <section id="contenidos">
+
+            <h2>Contenidos</h2>
+
+            <p class="subtitulo-seccion">
+                Estas son las áreas que podés explorar por ahora. La idea es ir
+                sumando más con el tiempo, dependiendo de lo que vaya aportando
+                la comunidad.
+            </p>
+
+            <div class="contenedor-cards">
+
+                <article class="card">
+                    <div class="card-icono">JS</div>
+                    <img src="img/javascript.png" alt="JavaScript">
+                    <h3>JavaScript</h3>
+                    <p>
+                        El primero que aprendí. Es el lenguaje de la web — con esto
+                        hacés que las páginas hagan cosas: botones, animaciones,
+                        formularios, lo que se te ocurra.
+                    </p>
+                    <button>Ver contenido</button>
+                </article>
+
+                <article class="card">
+                    <div class="card-icono">PY</div>
+                    <img src="img/python.png" alt="Python">
+                    <h3>Python</h3>
+                    <p>
+                        Si no sabés por dónde arrancar, arrancá por acá. Es el más
+                        amigable para empezar y además lo usan mucho en ciencia de
+                        datos e inteligencia artificial.
+                    </p>
+                    <button>Ver contenido</button>
+                </article>
+
+                <article class="card">
+                    <div class="card-icono">PHP</div>
+                    <img src="img/php.png" alt="PHP">
+                    <h3>PHP</h3>
+                    <p>
+                        Mucha gente lo subestima, pero gran parte de la web corre
+                        con PHP. Es útil para el backend: bases de datos, logins,
+                        formularios que realmente funcionan.
+                    </p>
+                    <button>Ver contenido</button>
+                </article>
+
+                <article class="card">
+                    <div class="card-icono">🤖</div>
+                    <img src="img/robotica.png" alt="Robótica">
+                    <h3>Robótica</h3>
+                    <p>
+                        Acá el código pasa al mundo físico. Arduino, sensores,
+                        motores... básicamente programar cosas que se mueven.
+                        Más divertido de lo que suena.
+                    </p>
+                    <button>Ver contenido</button>
+                </article>
+
+                <article class="card">
+                    <div class="card-icono">IA</div>
+                    <img src="img/ia.png" alt="Inteligencia Artificial">
+                    <h3>Inteligencia Artificial</h3>
+                    <p>
+                        Sí, como ChatGPT y todo eso. Acá vas a encontrar recursos
+                        para entender cómo funciona por adentro y cómo empezar
+                        a construir algo propio.
+                    </p>
+                    <button>Ver contenido</button>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- TUTORIAL -->
+        <section id="tutorial">
+
+            <h2>Tutorial destacado</h2>
+
+            <p class="subtitulo-seccion">
+                Si estás arrancando con desarrollo web, este video está bueno
+                para entender HTML y CSS desde cero. Es largo pero vale la pena.
+            </p>
+
+            <div class="contenedor-video">
+                <iframe
+                    src="https://www.youtube.com/embed/UB1O30fR-EE"
+                    title="Tutorial HTML y CSS desde cero"
+                    allowfullscreen>
+                </iframe>
+            </div>
+
+        </section>
+
+        <!-- RESEÑAS -->
+        <!-- Organizado con Grid -->
+        <section id="reseñas">
+
+            <h2>Lo que dice la gente</h2>
+
+            <p class="subtitulo-seccion">
+                Comentarios de usuarios que están usando CodeAtlas para aprender.
+            </p>
+
+            <div class="contenedor-reseñas">
+
+                <article class="reseña">
+                    <p class="reseña-texto">
+                        "Encontré explicaciones de Python que en ningún otro lado
+                        me las daban tan claras. Sin tanto tecnicismo al pedo."
+                    </p>
+                    <h3>Martina G.</h3>
+                    <span class="reseña-area">Python · Principiante</span>
+                </article>
+
+                <article class="reseña">
+                    <p class="reseña-texto">
+                        "La sección de robótica me salvó literalmente para un
+                        proyecto de la facu. Todo explicado paso a paso."
+                    </p>
+                    <h3>Lucas M.</h3>
+                    <span class="reseña-area">Robótica · Intermedio</span>
+                </article>
+
+                <article class="reseña">
+                    <p class="reseña-texto">
+                        "Me gusta que cualquiera puede subir contenido. Se siente
+                        más genuino que otros sitios donde solo hablan los mismos
+                        de siempre."
+                    </p>
+                    <h3>Sofía R.</h3>
+                    <span class="reseña-area">JavaScript · Principiante</span>
+                </article>
+
+                <article class="reseña">
+                    <p class="reseña-texto">
+                        "Empecé a estudiar IA sin saber absolutamente nada.
+                        Los recursos de acá me dieron un punto de partida real."
+                    </p>
+                    <h3>Tomás V.</h3>
+                    <span class="reseña-area">IA · Principiante</span>
+                </article>
+
+            </div>
+
+        </section>
+
+        <!-- COMUNIDAD -->
+        <section id="comunidad">
+
+            <div class="comunidad-texto">
+
+                <h2>¿De qué se trata esto?</h2>
+
+                <p>
+                    CodeAtlas lo armé porque cuando estaba aprendiendo a programar
+                    me costaba encontrar recursos en español que estuvieran bien
+                    explicados y en un solo lugar. Siempre era un video por acá,
+                    un artículo por allá, y nada terminaba de cerrar.
+                </p>
+
+                <p>
+                    La idea es simple: si aprendiste algo que te costó entender,
+                    subilo. Seguro le sirve a alguien más. No hace falta ser
+                    experto — alcanza con explicarlo bien.
+                </p>
+
+                <a href="#contacto" class="btn-secundario">Quiero colaborar</a>
+
+            </div>
+
+            <div class="comunidad-img">
+                <img src="img/comunidad.png" alt="Comunidad de programadores">
+            </div>
+
+        </section>
+
+        <!-- CONTACTO -->
+        <!-- Responsivo con Media Queries según consigna -->
+        <section id="contacto">
+
+            <h2>Contacto</h2>
+
+            <p class="subtitulo-seccion">
+                ¿Querés colaborar, proponer un tema o simplemente decir hola?
+                Mandame un mensaje.
+            </p>
+
+            <div class="contenedor-contacto">
+
+                <div class="contacto-info">
+                    <h3>¿Por qué escribirme?</h3>
+                    <ul>
+                        <li>📝 Subir tu propio tutorial o guía</li>
+                        <li>🐛 Reportar algo que está mal explicado</li>
+                        <li>💡 Sugerir un tema que falta</li>
+                        <li>🤝 Proponer una colaboración</li>
+                    </ul>
+                </div>
+
+                <form
+                    action="https://formspree.io/f/TU_ID"
+                    method="POST"
+                    class="formulario-contacto">
+
+                    <div class="campo">
+                        <label for="nombre">Nombre</label>
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            placeholder="Tu nombre"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="email">Correo electrónico</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="tu@email.com"
+                            required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea
+                            id="mensaje"
+                            name="mensaje"
+                            rows="5"
+                            placeholder="Contame qué tenés en mente..."
+                            required></textarea>
+                    </div>
+
+                    <button type="submit">Enviar mensaje</button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-contenido">
+            <p><span class="logo-icono-footer">&lt;/&gt;</span> CodeAtlas</p>
+            <p class="footer-frase">Hecho por alguien que también está aprendiendo.</p>
+            <p class="footer-copy">© 2026 CodeAtlas — Contenido abierto y colaborativo</p>
+        </div>
+    </footer>
+
+</body>
+</html>
