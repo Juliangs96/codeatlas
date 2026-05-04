@@ -52,12 +52,10 @@ codeatlas/
 
 ## Ver el proyecto
 
-🔗 [codeatlas — GitHub Pages](https://TU_USUARIO.github.io/codeatlas)
-
-> Reemplazá `TU_USUARIO` con tu nombre de usuario de GitHub una vez que subas el proyecto.
+🔗 [codeatlas — GitHub Pages](https://Juliangs96.github.io/codeatlas)
 
 ---
 
 ## Autor
 
-Julian — 2026
+Julian Garcia Serrano — 2026
