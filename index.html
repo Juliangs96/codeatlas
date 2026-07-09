@@ -32,6 +32,7 @@
                 <li><a href="#reseñas">Reseñas</a></li>
                 <li><a href="#comunidad">Comunidad</a></li>
                 <li><a href="#contacto">Contacto</a></li>
+                <li><a href="carrito.html" class="nav-carrito">🛒 Carrito <span id="badgeCarrito" class="badge-carrito">0</span></a></li>
             </ul>
         </nav>
 
@@ -328,6 +329,15 @@
             <p class="footer-copy">© 2026 CodeAtlas — Contenido abierto y colaborativo</p>
         </div>
     </footer>
+
+    <script>
+        // lee el carrito guardado para mostrar cuantos items hay en el numerito del nav
+        const badgeCarrito = document.getElementById("badgeCarrito");
+        const datosCarrito = localStorage.getItem("carritoCodeAtlas");
+        const carritoGuardado = datosCarrito ? JSON.parse(datosCarrito) : [];
+        const totalItems = carritoGuardado.reduce((acc, item) => acc + item.cantidad, 0);
+        badgeCarrito.textContent = totalItems;
+    </script>
 
 </body>
 </html>

@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeAtlas — Carrito</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+
+        <div class="header-logo">
+            <span class="logo-icono">&lt;/&gt;</span>
+            <h1>CodeAtlas</h1>
+        </div>
+
+        <!-- NAVEGACIÓN -->
+        <nav>
+            <ul>
+                <li><a href="index.html#inicio">Inicio</a></li>
+                <li><a href="index.html#contenidos">Contenidos</a></li>
+                <li><a href="index.html#tutorial">Tutorial</a></li>
+                <li><a href="index.html#reseñas">Reseñas</a></li>
+                <li><a href="index.html#comunidad">Comunidad</a></li>
+                <li><a href="index.html#contacto">Contacto</a></li>
+                <li><a href="carrito.html" class="nav-carrito">🛒 Carrito <span id="badgeCarrito" class="badge-carrito">0</span></a></li>
+            </ul>
+        </nav>
+
+    </header>
+
+    <main>
+
+        <!-- TIENDA -->
+        <section id="tienda">
+
+            <h2>Tienda CodeAtlas</h2>
+
+            <p class="subtitulo-seccion">
+                Comprá merch de CodeAtlas o sumate a alguno de los cursos que
+                ofrece la comunidad. Todo lo que agregues queda guardado en el
+                carrito aunque cierres la página.
+            </p>
+
+            <h3 class="subtitulo-tienda">Merchandising</h3>
+
+            <!-- Catálogo de productos -->
+            <div id="productos" class="contenedor-productos"></div>
+
+            <!-- CURSOS DE PROFESORES -->
+            <div class="bloque-cursos">
+
+                <h3 class="subtitulo-tienda">Cursos de profesores</h3>
+
+                <p class="texto-cursos">
+                    Además de ser una biblioteca abierta y gratuita, CodeAtlas también
+                    le da un espacio a profesores que quieran ofrecer cursos más
+                    guiados y profundos. Si sos docente y armaste contenido propio,
+                    lo podés publicar acá — y si sos estudiante, podés acceder a esos
+                    cursos pagando directo desde el carrito.
+                </p>
+
+                <div id="cursos" class="contenedor-productos"></div>
+
+            </div>
+
+            <!-- Info de sesión (sessionStorage) -->
+            <div class="info-sesion">
+                Productos agregados en esta sesión: <span id="contadorSesion">0</span>
+            </div>
+
+            <!-- Tabla del carrito (localStorage) -->
+            <table class="tabla-carrito">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Precio unit.</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Quitar</th>
+                    </tr>
+                </thead>
+                <tbody id="cuerpoCarrito"></tbody>
+            </table>
+
+            <p id="aviso" class="aviso-carrito"></p>
+
+            <div class="resumen-carrito">
+                <div class="total">Total: $<span id="totalCarrito">0</span></div>
+                <div class="botones-resumen">
+                    <button id="btnVaciar" class="btn-vaciar">Vaciar carrito</button>
+                    <button id="btnComprar" class="btn-comprar">Realizar compra</button>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-contenido">
+            <p><span class="logo-icono-footer">&lt;/&gt;</span> CodeAtlas</p>
+            <p class="footer-frase">Hecho por alguien que también está aprendiendo.</p>
+            <p class="footer-copy">© 2026 CodeAtlas — Contenido abierto y colaborativo</p>
+        </div>
+    </footer>
+
+    <script>
+        // productos de la tienda + cursos de profesores (mismo array, distinta categoria)
+        const productos = [
+            { id: 1, categoria: "merch", nombre: "Remera CodeAtlas", precio: 8500 },
+            { id: 2, categoria: "merch", nombre: "Taza </>", precio: 4200 },
+            { id: 3, categoria: "merch", nombre: "Stickers (pack x5)", precio: 1500 },
+            { id: 4, categoria: "merch", nombre: "Mousepad", precio: 5800 },
+            { id: 5, categoria: "merch", nombre: "Buzo CodeAtlas", precio: 15000 },
+
+            { id: 101, categoria: "curso", nombre: "JavaScript desde cero — Prof. Martina G.", precio: 12000 },
+            { id: 102, categoria: "curso", nombre: "Python para IA — Prof. Tomás V.", precio: 15000 },
+            { id: 103, categoria: "curso", nombre: "Robótica con Arduino — Prof. Lucas M.", precio: 18000 }
+        ];
+
+        const TOPE_POR_PRODUCTO = 5;   // maximo por producto
+        const TOPE_TOTAL_ITEMS = 15;   // maximo de items sumando todo el carrito
+
+        const contenedorProductos = document.getElementById("productos");
+        const contenedorCursos = document.getElementById("cursos");
+        const cuerpoCarrito = document.getElementById("cuerpoCarrito");
+        const totalCarritoEl = document.getElementById("totalCarrito");
+        const contadorSesionEl = document.getElementById("contadorSesion");
+        const badgeCarritoEl = document.getElementById("badgeCarrito");
+        const btnVaciar = document.getElementById("btnVaciar");
+        const btnComprar = document.getElementById("btnComprar");
+        const avisoEl = document.getElementById("aviso");
+
+        // el carrito vive en localStorage, asi que sobrevive si cerras el navegador
+        let carrito = cargarCarrito();
+
+        // este contador en cambio va por sessionStorage, se reinicia con cada sesion nueva
+        let contadorSesion = parseInt(sessionStorage.getItem("itemsAgregadosSesion")) || 0;
+
+        function cargarCarrito() {
+            const datos = localStorage.getItem("carritoCodeAtlas");
+            return datos ? JSON.parse(datos) : [];
+        }
+
+        function guardarCarrito() {
+            localStorage.setItem("carritoCodeAtlas", JSON.stringify(carrito));
+        }
+
+        function actualizarContadorSesion() {
+            sessionStorage.setItem("itemsAgregadosSesion", contadorSesion);
+            contadorSesionEl.textContent = contadorSesion;
+        }
+
+        function actualizarBadge() {
+            const totalItems = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+            badgeCarritoEl.textContent = totalItems;
+        }
+
+        function totalItemsEnCarrito() {
+            return carrito.reduce((acc, item) => acc + item.cantidad, 0);
+        }
+
+        function mostrarAviso(mensaje) {
+            avisoEl.textContent = mensaje;
+            setTimeout(() => { avisoEl.textContent = ""; }, 2500);
+        }
+
+        // pinta las cards de merch y cursos (mismo card, distinto contenedor segun categoria)
+        function renderProductos() {
+            contenedorProductos.innerHTML = "";
+            contenedorCursos.innerHTML = "";
+
+            productos.forEach(producto => {
+                const card = document.createElement("div");
+                card.className = "producto-card";
+
+                const etiquetaBoton = producto.categoria === "curso" ? "Comprar curso" : "Agregar al carrito";
+
+                card.innerHTML = `
+                    <h3>${producto.nombre}</h3>
+                    <p class="precio">$${producto.precio}</p>
+                    <button data-id="${producto.id}" class="btn-agregar">${etiquetaBoton}</button>
+                `;
+
+                if (producto.categoria === "curso") {
+                    contenedorCursos.appendChild(card);
+                } else {
+                    contenedorProductos.appendChild(card);
+                }
+            });
+        }
+
+        // arma la tabla del carrito de nuevo cada vez que algo cambia
+        function renderCarrito() {
+            cuerpoCarrito.innerHTML = "";
+
+            if (carrito.length === 0) {
+                cuerpoCarrito.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="carrito-vacio">El carrito está vacío</td>
+                    </tr>
+                `;
+            }
+
+            let total = 0;
+
+            carrito.forEach(item => {
+                const subtotal = item.precio * item.cantidad;
+                total += subtotal;
+
+                const fila = document.createElement("tr");
+                fila.innerHTML = `
+                    <td>${item.nombre}</td>
+                    <td>$${item.precio}</td>
+                    <td>
+                        <div class="cantidad-control">
+                            <button data-id="${item.id}" data-accion="restar">-</button>
+                            <span>${item.cantidad}</span>
+                            <button data-id="${item.id}" data-accion="sumar">+</button>
+                        </div>
+                    </td>
+                    <td>$${subtotal}</td>
+                    <td>
+                        <button data-id="${item.id}" class="btn-eliminar">✕</button>
+                    </td>
+                `;
+
+                cuerpoCarrito.appendChild(fila);
+            });
+
+            totalCarritoEl.textContent = total;
+            guardarCarrito();
+            actualizarBadge();
+        }
+
+        function agregarAlCarrito(id) {
+            const producto = productos.find(p => p.id === id);
+            const itemExistente = carrito.find(item => item.id === id);
+
+            if (totalItemsEnCarrito() >= TOPE_TOTAL_ITEMS) {
+                mostrarAviso(`Llegaste al máximo de ${TOPE_TOTAL_ITEMS} productos en el carrito.`);
+                return;
+            }
+
+            if (itemExistente) {
+                if (itemExistente.cantidad >= TOPE_POR_PRODUCTO) {
+                    mostrarAviso(`Máximo ${TOPE_POR_PRODUCTO} unidades por producto.`);
+                    return;
+                }
+                itemExistente.cantidad++;
+            } else {
+                carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, cantidad: 1 });
+            }
+
+            contadorSesion++;
+            actualizarContadorSesion();
+            renderCarrito();
+        }
+
+        function cambiarCantidad(id, accion) {
+            const item = carrito.find(item => item.id === id);
+            if (!item) return;
+
+            if (accion === "sumar") {
+                if (totalItemsEnCarrito() >= TOPE_TOTAL_ITEMS || item.cantidad >= TOPE_POR_PRODUCTO) {
+                    mostrarAviso(`Máximo ${TOPE_POR_PRODUCTO} unidades por producto.`);
+                    return;
+                }
+                item.cantidad++;
+            }
+
+            if (accion === "restar") {
+                item.cantidad--;
+                if (item.cantidad <= 0) {
+                    carrito = carrito.filter(i => i.id !== id);
+                }
+            }
+
+            renderCarrito();
+        }
+
+        function eliminarDelCarrito(id) {
+            carrito = carrito.filter(item => item.id !== id);
+            renderCarrito();
+        }
+
+        function vaciarCarrito() {
+            if (carrito.length === 0) return;
+            if (confirm("¿Vaciar todo el carrito?")) {
+                carrito = [];
+                renderCarrito();
+            }
+        }
+
+        function realizarCompra() {
+            if (carrito.length === 0) {
+                mostrarAviso("Todavía no agregaste nada al carrito.");
+                return;
+            }
+
+            const total = carrito.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+
+            if (confirm(`¿Confirmás la compra por $${total}?`)) {
+                alert("Listo, compra realizada. Gracias!");
+                carrito = [];
+                renderCarrito();
+            }
+        }
+
+        // un solo listener por contenedor, asi funciona con las cards que se generan dinamicamente
+        contenedorProductos.addEventListener("click", (e) => {
+            if (e.target.classList.contains("btn-agregar")) {
+                agregarAlCarrito(parseInt(e.target.dataset.id));
+            }
+        });
+
+        contenedorCursos.addEventListener("click", (e) => {
+            if (e.target.classList.contains("btn-agregar")) {
+                agregarAlCarrito(parseInt(e.target.dataset.id));
+            }
+        });
+
+        cuerpoCarrito.addEventListener("click", (e) => {
+            const id = parseInt(e.target.dataset.id);
+
+            if (e.target.dataset.accion) {
+                cambiarCantidad(id, e.target.dataset.accion);
+            }
+
+            if (e.target.classList.contains("btn-eliminar")) {
+                eliminarDelCarrito(id);
+            }
+        });
+
+        btnVaciar.addEventListener("click", vaciarCarrito);
+        btnComprar.addEventListener("click", realizarCompra);
+
+        renderProductos();
+        renderCarrito();
+        actualizarContadorSesion();
+    </script>
+
+</body>
+</html>
